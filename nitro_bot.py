@@ -30,7 +30,9 @@ def create_driver():
 
     temp_dir = tempfile.mkdtemp()
     options.add_argument(f"--user-data-dir={temp_dir}")
-    return uc.Chrome(options=options, version_main=148)
+    
+    # Fixed - removed version_main parameter
+    return uc.Chrome(options=options)
 
 def random_string(length=10):
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
