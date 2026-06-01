@@ -27,12 +27,17 @@ def create_driver():
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
 
     temp_dir = tempfile.mkdtemp()
     options.add_argument(f"--user-data-dir={temp_dir}")
     
-    # Fixed - removed version_main parameter
-    return uc.Chrome(options=options)
+    try:
+        return uc.Chrome(options=options)
+    except:
+        options.binary_location = "/usr/bin/google-chrome"
+        return uc.Chrome(options=options)
 
 def random_string(length=10):
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
