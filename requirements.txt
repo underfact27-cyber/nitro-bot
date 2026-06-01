@@ -1,3 +1,4 @@
 discord.py
 selenium
 undetected-chromedriver
+setuptools
