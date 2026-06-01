@@ -4,6 +4,7 @@ import random
 import string
 import time
 import tempfile
+import os
 import discord
 from discord import app_commands, Embed, ui, ButtonStyle
 from selenium.webdriver.common.by import By
@@ -106,7 +107,7 @@ async def create_single_account(target_profile_url, add_friend, log_channel, det
             await detailed_channel.send("opening chrome...")
 
         driver.get("https://nitrotype.com/race")
-        await asyncio.sleep(10)  # Extra wait for page to load
+        await asyncio.sleep(10)
 
         if detailed_channel:
             await detailed_channel.send("viewing race page")
@@ -117,7 +118,6 @@ async def create_single_account(target_profile_url, add_friend, log_channel, det
         except:
             pass
 
-        # Wait for race text to appear
         try:
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, ".race-text, .words, [class*='word']"))
@@ -135,10 +135,9 @@ async def create_single_account(target_profile_url, add_friend, log_channel, det
         body.click()
         await asyncio.sleep(3)
 
-        # RELIABLE TYPING - WORKS EVERY TIME
         for char in SENTENCE:
             body.send_keys(char)
-            time.sleep(random.uniform(0.08, 0.12))  # Safe, reliable speed
+            time.sleep(random.uniform(0.08, 0.12))
 
         if detailed_channel:
             await detailed_channel.send("typing complete")
@@ -264,4 +263,4 @@ async def on_ready():
     print(f"✅ Bot Online: {client.user}")
 
 if __name__ == "__main__":
-    client.run("MTUxMDA4MjYzODkyNzYyNjI3MA.GBxe3J.MlUEabu1xQ5o9D_Uz2YGDer3YbUFIRmDuw4dA8")
+    client.run(os.getenv("DISCORD_TOKEN"))
